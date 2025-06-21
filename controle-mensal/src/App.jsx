@@ -14,7 +14,6 @@ const App = () => {
 return (
   <div>
     <h1>Controle de Gatsos mensais</h1>
-    
 
     <h2>Despesas</h2>
     <table>
