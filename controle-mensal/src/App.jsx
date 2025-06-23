@@ -12,6 +12,18 @@ const App = () => {
     data: ''
   });
 
+  useEffect(() => {
+    const dadosSalvos = localStorage.getItem('despesas');
+    if (dadosSalvos) {
+      setDespesas(JSON.parse(dadosSalvos));
+    }
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem('despesas', JSON.stringify(despesas));
+  }, [despesas]);
+
  const adicionarDespesa = (e) => {
     e.preventDefault();
     const novaDespesa = { ...form, valor: parseFloat(form.valor) };
@@ -23,8 +35,6 @@ const App = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-
-
 
 return (
   <div>
@@ -41,6 +51,7 @@ return (
         <button type="submit">Adicionar</button>
       </form>
 
+    <div className='lista'>
     <h2>Despesas</h2>
     <table>
      <tread>
@@ -62,7 +73,11 @@ return (
           ))}
         </tbody>
     </table>
+    </div>
+    
 
+    <h2>Gráfico de Gastos por Categoria</h2>
+    
   </div>
 );
 };
