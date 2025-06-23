@@ -1,35 +1,86 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: rgb(207, 186, 240);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-div {
-  width: 100%;
-  justify-content: center;
 
-}
-.lista{
-  width: 100%;
- 
-}
-h2 {
+body {
+  font-family: Arial, sans-serif;
+  background:rgb(102, 91, 167);
+  margin: 20px;
   color: #333;
-  text-align: center;
 }
 
 h1 {
-  color: #333;
   text-align: center;
-  
+  color:rgb(0, 0, 0);
+  font-family: Arial;
+}
+h2 {
+  text-align: center;
+  color:rgb(0, 0, 0);
+  font-family: Arial;
 }
 
-input {
-  background-color: rgb(236, 226, 245);
-  border: 1px solid palevioletred;
-  border-radius: 5px;
-  color: blue;
-  height: 1.5rem;
+form {
+  background: white;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.32);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
+
+form input, form select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1 1 120px;
+}
+
+form button {
+  background:rgb(111, 69, 226);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:0.3s ease;
+  flex: 1 1 100px;
+}
+
+form button:hover {
+  background:rgb(110, 108, 235);
+}
+
+.lista {
+  max-width: 700px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead tr {
+  background-color:rgb(76, 48, 128);
+  color: white;
+}
+
+thead th, tbody td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color:rgb(183, 180, 192);
+}
+
