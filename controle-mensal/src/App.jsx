@@ -31,6 +31,19 @@ const App = () => {
     setForm({ ...form, [name]: value });
   };
 
+  const [indiceEdicao, setIndiceEdicao] = useState(null); // precisa disso também no topo
+
+const editarDespesa = (index) => {
+  setForm(despesas[index]);         // Preenche o formulário com os dados da linha
+  setIndiceEdicao(index);           // Marca qual está sendo editado
+};
+
+const excluirDespesa = (index) => {
+  const novaLista = despesas.filter((_, i) => i !== index);
+  setDespesas(novaLista);
+  if (indiceEdicao === index) setIndiceEdicao(null); // cancela edição se excluir o que estava editando
+};
+
   // Dados para o gráfico
   const dadosGrafico = [
     {
@@ -82,6 +95,8 @@ const App = () => {
                 <td>{d.categoria}</td>
                 <td>R$ {d.valor.toFixed(2)}</td>
                 <td>{d.data}</td>
+                <td><button onClick={() => excluirDespesa(i)}>excluir</button></td>
+                <td><button onClick={() => editarDespesa(i)}>editar</button></td>
               </tr>
             ))}
           </tbody>
