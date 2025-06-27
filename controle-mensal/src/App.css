@@ -1,20 +1,13 @@
-
 body {
   font-family: Arial, sans-serif;
-  background:rgb(102, 91, 167);
+  background: rgb(102, 91, 167);
   margin: 20px;
   color: #333;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
-  color:rgb(0, 0, 0);
-  font-family: Arial;
-}
-h2 {
-  text-align: center;
-  color:rgb(0, 0, 0);
-  font-family: Arial;
+  color: black;
 }
 
 form {
@@ -39,19 +32,19 @@ form input, form select {
 }
 
 form button {
-  background:rgb(111, 69, 226);
+  background: rgb(111, 69, 226);
   border: none;
   color: white;
   padding: 10px 16px;
   font-size: 1rem;
   border-radius: 4px;
   cursor: pointer;
-  transition:0.3s ease;
+  transition: 0.3s ease;
   flex: 1 1 100px;
 }
 
 form button:hover {
-  background:rgb(110, 108, 235);
+  background: rgb(110, 108, 235);
 }
 
 .lista {
@@ -70,36 +63,96 @@ table {
   table-layout: fixed;
 }
 
-thead tr {
-  background-color:rgb(76, 48, 128);
+thead {
+  background-color: rgb(76, 48, 128);
   color: white;
-  text-align: left;
-  padding: 10px;
-  border-bottom: 2px solid rgb(110, 108, 235);
-  display: table-row; 
-  width: 100%;
 }
 
-tbody td:last-child,
-tbody td:nth-last-child(2) {
-  text-align: center; 
-  width: 50px;
+thead th {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid rgb(76, 48, 128);
 }
 
-thead th, tbody td {
+tbody td {
   padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+  text-align: center;
+  border: 1px solid #ddd;
   word-wrap: break-word;
 }
 
 tbody tr:hover {
-  background-color:rgb(183, 180, 192);
+  background-color: rgb(183, 180, 192);
 }
 
-button{
+tbody td:last-child,
+tbody td:nth-last-child(2) {
+  width: 50px;
+}
+
+button {
   color: purple;
   border: 2px solid purple;
   border-radius: 10%;
+  padding: 5px;
 }
 
+/* Filtro de mês */
+input[type="month"] {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  form {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .lista {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form input,
+  form select,
+  form button {
+    flex: 1 1 100%;
+  }
+
+  table, thead, tbody, th, td, tr {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1, h2 {
+    font-size: 1.2rem;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  form input, form select {
+    font-size: 0.9rem;
+    padding: 6px;
+  }
+
+  form button {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+}

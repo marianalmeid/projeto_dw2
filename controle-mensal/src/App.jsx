@@ -18,72 +18,85 @@ const App = () => {
     data: ''
   });
 
+  const [indiceEdicao, setIndiceEdicao] = useState(null);
+
+  // ✅ Mês atual como padrão
+  const [mesSelecionado, setMesSelecionado] = useState(() => {
+    const hoje = new Date();
+    return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
+  });
+
   useEffect(() => {
     localStorage.setItem('despesas', JSON.stringify(despesas));
   }, [despesas]);
 
- 
   const adicionarDespesa = (e) => {
     e.preventDefault();
-  
     const novaDespesa = { ...form, valor: parseFloat(form.valor) };
-  
+
     if (indiceEdicao !== null) {
-      // Atualiza a despesa existente
       const novasDespesas = [...despesas];
       novasDespesas[indiceEdicao] = novaDespesa;
       setDespesas(novasDespesas);
-      setIndiceEdicao(null); // Reseta o índice de edição
+      setIndiceEdicao(null);
     } else {
-      // Adiciona uma nova despesa
       setDespesas([...despesas, novaDespesa]);
     }
-  
-    // Reseta o formulário
+
     setForm({ nome: '', categoria: '', tipo: 'fixa', valor: '', data: '' });
   };
-  
 
   const mudanca = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const [indiceEdicao, setIndiceEdicao] = useState(null); // precisa disso também no topo
+  const editarDespesa = (index) => {
+    setForm(despesas[index]);
+    setIndiceEdicao(index);
+  };
 
-const editarDespesa = (index) => {
-  setForm(despesas[index]);         // Preenche o formulário com os dados da linha
-  setIndiceEdicao(index);           // Marca qual está sendo editado
-};
+  const excluirDespesa = (index) => {
+    const novaLista = despesas.filter((_, i) => i !== index);
+    setDespesas(novaLista);
+    if (indiceEdicao === index) setIndiceEdicao(null);
+  };
 
-const excluirDespesa = (index) => {
-  const novaLista = despesas.filter((_, i) => i !== index);
-  setDespesas(novaLista);
-  if (indiceEdicao === index) setIndiceEdicao(null); // cancela edição se excluir o que estava editando
-};
+  // ✅ Filtrar despesas do mês selecionado
+  const despesasFiltradas = despesas.filter((d) => {
+    return d.data.startsWith(mesSelecionado);
+  });
 
-  // Dados para o gráfico
   const dadosGrafico = [
     {
       tipo: 'Fixa',
-      valor: despesas
+      valor: despesasFiltradas
         .filter(d => d.tipo === 'fixa')
         .reduce((total, d) => total + d.valor, 0)
     },
     {
-      categoria: 'Variável',
-      valor: despesas
-        .filter(d => d.tipo=== 'variavel')
+      tipo: 'Variável',
+      valor: despesasFiltradas
+        .filter(d => d.tipo === 'variavel')
         .reduce((total, d) => total + d.valor, 0)
     }
   ];
+
   const cores = ['#6A0DAD', '#9370DB'];
 
-
   return (
-    
     <div className="container-centralizado">
       <h1>Controle de Gastos Mensais</h1>
+
+      {/* ✅ Seletor de mês */}
+      <div style={{ textAlign: 'center', margin: '10px 0', color: 'black'}}>
+        <label>Selecionar mês: </label>
+        <input
+          type="month"
+          value={mesSelecionado}
+          onChange={(e) => setMesSelecionado(e.target.value)}
+        />
+      </div>
 
       <form onSubmit={adicionarDespesa}>
         <input name="nome" placeholder="Nome" value={form.nome} onChange={mudanca} required />
@@ -107,6 +120,7 @@ const excluirDespesa = (index) => {
               <th>Tipo</th>
               <th>Valor</th>
               <th>Data</th>
+              <th colSpan="2">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -117,20 +131,24 @@ const excluirDespesa = (index) => {
                 <td>{d.tipo}</td>
                 <td>R$ {d.valor.toFixed(2)}</td>
                 <td>{d.data}</td>
-                <td><button onClick={() => excluirDespesa(i)}>
-                  <DeleteIcon/>
-                  </button></td>
-                <td><button onClick={() => editarDespesa(i)}>
-                  <EditIcon/>
-                  </button></td>
+                <td>
+                  <button onClick={() => excluirDespesa(i)}>
+                    <DeleteIcon />
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => editarDespesa(i)}>
+                    <EditIcon />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <h2>Gráfico de Gastos por Categoria</h2>
-      <div style={{ width: '100%', maxWidth: 1200, height: 300 }}>
+      <h2>Gráfico de Gastos no Mês</h2>
+      <div style={{ width: '100%', maxWidth: 1600, height: 300 }}>
         <ResponsiveContainer>
           <PieChart>
             <Pie
