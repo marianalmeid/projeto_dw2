@@ -67,17 +67,30 @@ form button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 thead tr {
   background-color:rgb(76, 48, 128);
   color: white;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid rgb(110, 108, 235);
+  display: table-row; 
+  width: 100%;
+}
+
+tbody td:last-child,
+tbody td:nth-last-child(2) {
+  text-align: center; 
+  width: 50px;
 }
 
 thead th, tbody td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  word-wrap: break-word;
 }
 
 tbody tr:hover {

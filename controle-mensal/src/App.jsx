@@ -40,7 +40,7 @@ const App = () => {
     }
   
     // Reseta o formulário
-    setForm({ nome: '', categoria: 'fixa', valor: '', data: '' });
+    setForm({ nome: '', categoria: '', tipo: 'fixa', valor: '', data: '' });
   };
   
 
@@ -65,15 +65,15 @@ const excluirDespesa = (index) => {
   // Dados para o gráfico
   const dadosGrafico = [
     {
-      categoria: 'Fixa',
+      tipo: 'Fixa',
       valor: despesas
-        .filter(d => d.categoria === 'fixa')
+        .filter(d => d.tipo === 'fixa')
         .reduce((total, d) => total + d.valor, 0)
     },
     {
       categoria: 'Variável',
       valor: despesas
-        .filter(d => d.categoria === 'variavel')
+        .filter(d => d.tipo=== 'variavel')
         .reduce((total, d) => total + d.valor, 0)
     }
   ];
@@ -88,7 +88,7 @@ const excluirDespesa = (index) => {
       <form onSubmit={adicionarDespesa}>
         <input name="nome" placeholder="Nome" value={form.nome} onChange={mudanca} required />
         <input name="categoria" placeholder="Categoria" value={form.categoria} onChange={mudanca} required />
-        <select name="tipo" value={form.categoria} onChange={mudanca}>
+        <select name="tipo" value={form.tipo} onChange={mudanca}>
           <option value="fixa">Despesa Fixa</option>
           <option value="variavel">Despesa Variável</option>
         </select>
@@ -104,6 +104,7 @@ const excluirDespesa = (index) => {
             <tr>
               <th>Nome</th>
               <th>Categoria</th>
+              <th>Tipo</th>
               <th>Valor</th>
               <th>Data</th>
             </tr>
@@ -113,6 +114,7 @@ const excluirDespesa = (index) => {
               <tr key={i}>
                 <td>{d.nome}</td>
                 <td>{d.categoria}</td>
+                <td>{d.tipo}</td>
                 <td>R$ {d.valor.toFixed(2)}</td>
                 <td>{d.data}</td>
                 <td><button onClick={() => excluirDespesa(i)}>
@@ -134,7 +136,7 @@ const excluirDespesa = (index) => {
             <Pie
               data={dadosGrafico}
               dataKey="valor"
-              nameKey="categoria"
+              nameKey="tipo"
               cx="50%"
               cy="50%"
               outerRadius={100}
