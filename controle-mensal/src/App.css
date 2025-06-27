@@ -84,3 +84,9 @@ tbody tr:hover {
   background-color:rgb(183, 180, 192);
 }
 
+button{
+  color: purple;
+  border: 2px solid purple;
+  border-radius: 10%;
+}
+

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const App = () => {
   const [despesas, setDespesas] = useState(() => {
@@ -10,7 +12,8 @@ const App = () => {
 
   const [form, setForm] = useState({
     nome: '',
-    categoria: 'fixa',
+    categoria: '',
+    tipo: 'fixa',
     valor: '',
     data: ''
   });
@@ -19,12 +22,27 @@ const App = () => {
     localStorage.setItem('despesas', JSON.stringify(despesas));
   }, [despesas]);
 
+ 
   const adicionarDespesa = (e) => {
     e.preventDefault();
+  
     const novaDespesa = { ...form, valor: parseFloat(form.valor) };
-    setDespesas([...despesas, novaDespesa]);
+  
+    if (indiceEdicao !== null) {
+      // Atualiza a despesa existente
+      const novasDespesas = [...despesas];
+      novasDespesas[indiceEdicao] = novaDespesa;
+      setDespesas(novasDespesas);
+      setIndiceEdicao(null); // Reseta o índice de edição
+    } else {
+      // Adiciona uma nova despesa
+      setDespesas([...despesas, novaDespesa]);
+    }
+  
+    // Reseta o formulário
     setForm({ nome: '', categoria: 'fixa', valor: '', data: '' });
   };
+  
 
   const mudanca = (e) => {
     const { name, value } = e.target;
@@ -63,12 +81,14 @@ const excluirDespesa = (index) => {
 
 
   return (
+    
     <div className="container-centralizado">
       <h1>Controle de Gastos Mensais</h1>
 
       <form onSubmit={adicionarDespesa}>
         <input name="nome" placeholder="Nome" value={form.nome} onChange={mudanca} required />
-        <select name="categoria" value={form.categoria} onChange={mudanca}>
+        <input name="categoria" placeholder="Categoria" value={form.categoria} onChange={mudanca} required />
+        <select name="tipo" value={form.categoria} onChange={mudanca}>
           <option value="fixa">Despesa Fixa</option>
           <option value="variavel">Despesa Variável</option>
         </select>
@@ -95,8 +115,12 @@ const excluirDespesa = (index) => {
                 <td>{d.categoria}</td>
                 <td>R$ {d.valor.toFixed(2)}</td>
                 <td>{d.data}</td>
-                <td><button onClick={() => excluirDespesa(i)}>excluir</button></td>
-                <td><button onClick={() => editarDespesa(i)}>editar</button></td>
+                <td><button onClick={() => excluirDespesa(i)}>
+                  <DeleteIcon/>
+                  </button></td>
+                <td><button onClick={() => editarDespesa(i)}>
+                  <EditIcon/>
+                  </button></td>
               </tr>
             ))}
           </tbody>
