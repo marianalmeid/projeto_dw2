@@ -3,6 +3,7 @@ body {
   background: rgb(102, 91, 167);
   margin: 20px;
   color: #333;
+  
 }
 
 h1, h2 {
@@ -96,6 +97,18 @@ button {
   border-radius: 10%;
   padding: 5px;
 }
+
+.selectmes {
+  text-align: center;
+  margin: '10px 0'; 
+  color: 'black';
+}
+
+.grafico {
+  width: 100%;
+  max-width: 1600px;
+  height: 300px;
+  }
 
 /* Filtro de mês */
 input[type="month"] {

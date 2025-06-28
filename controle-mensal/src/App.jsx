@@ -20,7 +20,7 @@ const App = () => {
 
   const [indiceEdicao, setIndiceEdicao] = useState(null);
 
-  // ✅ Mês atual como padrão
+  //Mês atual como padrão
   const [mesSelecionado, setMesSelecionado] = useState(() => {
     const hoje = new Date();
     return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
@@ -62,7 +62,7 @@ const App = () => {
     if (indiceEdicao === index) setIndiceEdicao(null);
   };
 
-  // ✅ Filtrar despesas do mês selecionado
+  // Filtrar despesas do mês selecionado
   const despesasFiltradas = despesas.filter((d) => {
     return d.data.startsWith(mesSelecionado);
   });
@@ -87,16 +87,6 @@ const App = () => {
   return (
     <div className="container-centralizado">
       <h1>Controle de Gastos Mensais</h1>
-
-      {/* ✅ Seletor de mês */}
-      <div style={{ textAlign: 'center', margin: '10px 0', color: 'black'}}>
-        <label>Selecionar mês: </label>
-        <input
-          type="month"
-          value={mesSelecionado}
-          onChange={(e) => setMesSelecionado(e.target.value)}
-        />
-      </div>
 
       <form onSubmit={adicionarDespesa}>
         <input name="nome" placeholder="Nome" value={form.nome} onChange={mudanca} required />
@@ -133,12 +123,12 @@ const App = () => {
                 <td>{d.data}</td>
                 <td>
                   <button onClick={() => excluirDespesa(i)}>
-                    <DeleteIcon />
+                    <DeleteIcon/>
                   </button>
                 </td>
                 <td>
                   <button onClick={() => editarDespesa(i)}>
-                    <EditIcon />
+                    <EditIcon/>
                   </button>
                 </td>
               </tr>
@@ -147,8 +137,18 @@ const App = () => {
         </table>
       </div>
 
+       {/* Seletor de mês */}
+      <div className='selectmes'>
+        <label>Selecionar mês: </label>
+        <input
+          type="month"
+          value={mesSelecionado}
+          onChange={(e) => setMesSelecionado(e.target.value)}
+        />
+      </div>
+
       <h2>Gráfico de Gastos no Mês</h2>
-      <div style={{ width: '100%', maxWidth: 1600, height: 300 }}>
+      <div className='grafico'>
         <ResponsiveContainer>
           <PieChart>
             <Pie
