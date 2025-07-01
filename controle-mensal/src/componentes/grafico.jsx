@@ -1,16 +1,27 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const GraficoDespesas = ({ dadosGrafico }) => {
-  if (!dadosGrafico || dadosGrafico.length === 0) {
-    return <p></p>;
-  }
+const GraficoDespesas = ({ despesasFiltradas }) => {
+  const dadosGrafico = [
+    {
+      tipo: 'Fixa',
+      valor: despesasFiltradas
+        .filter(d => d.tipo === 'fixa')
+        .reduce((total, d) => total + d.valor, 0)
+    },
+    {
+      tipo: 'Variável',
+      valor: despesasFiltradas
+        .filter(d => d.tipo === 'variavel')
+        .reduce((total, d) => total + d.valor, 0)
+    }
+  ];
 
   const cores = ['#6A0DAD', '#9370DB'];
 
   return (
-    <div className="grafico">
-      <ResponsiveContainer width="100%" height={300}>
+    <div style={{ width: '100%', maxWidth: 1600, height: 300 }}>
+      <ResponsiveContainer>
         <PieChart>
           <Pie
             data={dadosGrafico}

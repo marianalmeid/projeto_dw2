@@ -1,13 +1,17 @@
 import React from 'react';
 
-const FiltroMes = ({ mesSelecionado, onChange }) => {
+const FiltroMes = ({ mesSelecionado, setMesSelecionado }) => {
+  const handleMesChange = (e) => {
+      setMesSelecionado(e.target.value)}
   return (
     <div className="selectmes">
       <label>Selecionar mês: </label>
       <input
-        type="month"
-        value={mesSelecionado}
-        onChange={(e) => onChange(e.target.value)}
+         id="mes-selecionado"
+         type="month"
+         value={mesSelecionado}
+         onChange={handleMesChange}
+        
       />
     </div>
   );

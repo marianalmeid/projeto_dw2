@@ -2,9 +2,9 @@ import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-const ListaDespesas = ({ despesas, onExcluir, onEditar }) => {
+const TabelaDespesas = ({ despesas, editarDespesa, excluirDespesa }) => {
   return (
-    <div className="lista">
+    <div className='lista'>
       <h2>Despesas</h2>
       <table>
         <thead>
@@ -26,12 +26,12 @@ const ListaDespesas = ({ despesas, onExcluir, onEditar }) => {
               <td>R$ {d.valor.toFixed(2)}</td>
               <td>{d.data}</td>
               <td>
-                <button onClick={() => onExcluir(i)}>
+                <button onClick={() => excluirDespesa(i)}>
                   <DeleteIcon />
                 </button>
               </td>
               <td>
-                <button onClick={() => onEditar(i)}>
+                <button onClick={() => editarDespesa(i)}>
                   <EditIcon />
                 </button>
               </td>
@@ -43,4 +43,4 @@ const ListaDespesas = ({ despesas, onExcluir, onEditar }) => {
   );
 };
 
-export default ListaDespesas;
+export default TabelaDespesas;
