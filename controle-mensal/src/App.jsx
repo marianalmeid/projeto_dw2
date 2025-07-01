@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import FormularioDespesa from './componentes/formularioDespesa';
+import ListaDespesas from './componentes/listaDespesa';
+import GraficoDespesas from './componentes/filtroMes';
+import FiltroMes from './componentes/grafico';
+import './App.css'
 
 const App = () => {
   const [despesas, setDespesas] = useState(() => {
@@ -19,8 +20,6 @@ const App = () => {
   });
 
   const [indiceEdicao, setIndiceEdicao] = useState(null);
-
-  //Mês atual como padrão
   const [mesSelecionado, setMesSelecionado] = useState(() => {
     const hoje = new Date();
     return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
@@ -46,7 +45,7 @@ const App = () => {
     setForm({ nome: '', categoria: '', tipo: 'fixa', valor: '', data: '' });
   };
 
-  const mudanca = (e) => {
+  const mudarForm = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
@@ -62,23 +61,16 @@ const App = () => {
     if (indiceEdicao === index) setIndiceEdicao(null);
   };
 
-  // Filtrar despesas do mês selecionado
-  const despesasFiltradas = despesas.filter((d) => {
-    return d.data.startsWith(mesSelecionado);
-  });
+  const despesasFiltradas = despesas.filter((d) => d.data.startsWith(mesSelecionado));
 
   const dadosGrafico = [
     {
       tipo: 'Fixa',
-      valor: despesasFiltradas
-        .filter(d => d.tipo === 'fixa')
-        .reduce((total, d) => total + d.valor, 0)
+      valor: despesasFiltradas.filter((d) => d.tipo === 'fixa').reduce((acc, d) => acc + d.valor, 0)
     },
     {
       tipo: 'Variável',
-      valor: despesasFiltradas
-        .filter(d => d.tipo === 'variavel')
-        .reduce((total, d) => total + d.valor, 0)
+      valor: despesasFiltradas.filter((d) => d.tipo === 'variavel').reduce((acc, d) => acc + d.valor, 0)
     }
   ];
 
@@ -87,89 +79,10 @@ const App = () => {
   return (
     <div className="container-centralizado">
       <h1>Controle de Gastos Mensais</h1>
-
-      <form onSubmit={adicionarDespesa}>
-        <input name="nome" placeholder="Nome" value={form.nome} onChange={mudanca} required />
-        <input name="categoria" placeholder="Categoria" value={form.categoria} onChange={mudanca} required />
-        <select name="tipo" value={form.tipo} onChange={mudanca}>
-          <option value="fixa">Despesa Fixa</option>
-          <option value="variavel">Despesa Variável</option>
-        </select>
-        <input name="valor" type="number" placeholder="Valor" value={form.valor} onChange={mudanca} required />
-        <input name="data" type="date" value={form.data} onChange={mudanca} required />
-        <button type="submit">Adicionar</button>
-      </form>
-
-      <div className='lista'>
-        <h2>Despesas</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Categoria</th>
-              <th>Tipo</th>
-              <th>Valor</th>
-              <th>Data</th>
-              <th colSpan="2">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {despesas.map((d, i) => (
-              <tr key={i}>
-                <td>{d.nome}</td>
-                <td>{d.categoria}</td>
-                <td>{d.tipo}</td>
-                <td>R$ {d.valor.toFixed(2)}</td>
-                <td>{d.data}</td>
-                <td>
-                  <button onClick={() => excluirDespesa(i)}>
-                    <DeleteIcon/>
-                  </button>
-                </td>
-                <td>
-                  <button onClick={() => editarDespesa(i)}>
-                    <EditIcon/>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-       {/* Seletor de mês */}
-      <div className='selectmes'>
-        <label>Selecionar mês: </label>
-        <input
-          type="month"
-          value={mesSelecionado}
-          onChange={(e) => setMesSelecionado(e.target.value)}
-        />
-      </div>
-
-      <h2>Gráfico de Gastos no Mês</h2>
-      <div className='grafico'>
-        <ResponsiveContainer>
-          <PieChart>
-            <Pie
-              data={dadosGrafico}
-              dataKey="valor"
-              nameKey="tipo"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#8884d8"
-              label
-            >
-              {dadosGrafico.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={cores[index % cores.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+      <FormularioDespesa form={form} onSubmit={adicionarDespesa} onChange={mudarForm} />
+      <ListaDespesas despesas={despesasFiltradas} onExcluir={excluirDespesa} onEditar={editarDespesa} />
+      <FiltroMes mesSelecionado={mesSelecionado} onChange={setMesSelecionado} />
+      <GraficoDespesas dadosGrafico={dadosGrafico} cores={cores} />
     </div>
   );
 };
