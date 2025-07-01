@@ -17,27 +17,37 @@ const TabelaDespesas = ({ despesas, editarDespesa, excluirDespesa }) => {
             <th colSpan="2">Ações</th>
           </tr>
         </thead>
-        <tbody>
-          {despesas.map((d, i) => (
-            <tr key={i}>
-              <td>{d.nome}</td>
-              <td>{d.categoria}</td>
-              <td>{d.tipo}</td>
-              <td>R$ {d.valor.toFixed(2)}</td>
-              <td>{d.data}</td>
-              <td>
-                <button onClick={() => excluirDespesa(i)}>
-                  <DeleteIcon />
-                </button>
-              </td>
-              <td>
-                <button onClick={() => editarDespesa(i)}>
-                  <EditIcon />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+<tbody>
+  {despesas.map((d, i) => (
+    <React.Fragment key={i}>
+      <tr>
+        <td>{d.nome}</td>
+        <td>{d.categoria}</td>
+        <td>{d.tipo}</td>
+        <td>R$ {d.valor.toFixed(2)}</td>
+        <td>{d.data}</td>
+        <td>
+          <button onClick={() => excluirDespesa(i)}>
+            <DeleteIcon />
+          </button>
+        </td>
+        <td>
+          <button onClick={() => editarDespesa(i)}>
+            <EditIcon />
+          </button>
+        </td>
+      </tr>
+      {d.tipo === 'variável' && d.subcategorias && d.subcategorias.map((sub, subIndex) => (
+        <tr key={`${i}-${subIndex}`} className="subcategoria">
+          <td>{sub.nome}</td>
+          <td colSpan="2">Subcategoria</td>
+          <td>R$ {sub.valor}</td>
+          <td colSpan="3"></td>
+        </tr>
+      ))}
+    </React.Fragment>
+  ))}
+</tbody>
       </table>
     </div>
   );
