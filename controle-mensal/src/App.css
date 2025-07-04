@@ -110,6 +110,47 @@ button {
   height: 300px;
   }
 
+  .conversorReal-container {
+  position: fixed;
+  bottom: 20px;
+  left: 670px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(63, 60, 60, 0.2);
+  width: 260px;
+}
+
+.conversorReal h3 {
+  margin: 0 0 15px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  font-size:1.1rem;
+  color: #000000;
+}
+
+.conversorReal input {
+  width: 100%;
+  padding: 3px;
+  margin-bottom: 8px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+}
+
+.conversorReal button {
+  width: 100%;
+  background-color: rgb(58, 39, 167);
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.conversorReal button:hover {
+  background-color: #580c81;
+}
+
+
 /* Filtro de mês */
 input[type="month"] {
   padding: 5px 10px;
@@ -168,6 +209,7 @@ input[type="month"] {
   table {
     font-size: 0.85rem;
   }
+
 
 }
 

@@ -3,6 +3,7 @@ import FormDespesa from './componentes/formularioDespesa';
 import TabelaDespesas from './componentes/listaDespesa';
 import FiltroMes from './componentes/filtroMes';
 import GraficoDespesas from './componentes/grafico';
+import ConversorReal from './componentes/conversorReal'; 
 import './App.css';
 
 const App = () => {
@@ -11,14 +12,15 @@ const App = () => {
     return dadosSalvos ? JSON.parse(dadosSalvos) : [];
   });
 
- const [form, setForm] = useState({
-  nome: '',
-  categoria: '',
-  tipo: 'fixa',
-  valor: '',
-  data: '',
-  subcategorias: [] // Adicione este campo
-});
+  const [form, setForm] = useState({
+    nome: '',
+    categoria: '',
+    tipo: 'fixa',
+    valor: '',
+    data: '',
+    subcategorias: []
+  });
+
   const [indiceEdicao, setIndiceEdicao] = useState(null);
 
   const [mesSelecionado, setMesSelecionado] = useState(() => {
@@ -30,18 +32,19 @@ const App = () => {
     localStorage.setItem('despesas', JSON.stringify(despesas));
   }, [despesas]);
 
- const adicionarDespesa = (novaDespesa) => {
-  if (indiceEdicao !== null) {
-    const atualizadas = [...despesas];
-    atualizadas[indiceEdicao] = novaDespesa;
-    setDespesas(atualizadas);
-    setIndiceEdicao(null);
-  } else {
-    setDespesas([...despesas, {
-      ...novaDespesa,
-      valor: novaDespesa.tipo === 'fixa' ? parseFloat(novaDespesa.valor) : 
-        novaDespesa.subcategorias.reduce((total, sub) => total + parseFloat(sub.valor), 0)
-    }]);
+  const adicionarDespesa = (novaDespesa) => {
+    if (indiceEdicao !== null) {
+      const atualizadas = [...despesas];
+      atualizadas[indiceEdicao] = novaDespesa;
+      setDespesas(atualizadas);
+      setIndiceEdicao(null);
+    } else {
+      setDespesas([...despesas, {
+        ...novaDespesa,
+        valor: novaDespesa.tipo === 'fixa'
+          ? parseFloat(novaDespesa.valor)
+          : novaDespesa.subcategorias.reduce((total, sub) => total + parseFloat(sub.valor), 0)
+      }]);
     }
   };
 
@@ -73,9 +76,18 @@ const App = () => {
         editarDespesa={editarDespesa}
         excluirDespesa={excluirDespesa}
       />
-      <FiltroMes mesSelecionado={mesSelecionado} setMesSelecionado={setMesSelecionado} />
+
+      <FiltroMes
+        mesSelecionado={mesSelecionado}
+        setMesSelecionado={setMesSelecionado}
+      />
 
       <GraficoDespesas despesasFiltradas={despesasFiltradas} />
+
+    
+      <div className="conversorReal-container">
+        <ConversorReal /> 
+      </div>
     </div>
   );
 };
