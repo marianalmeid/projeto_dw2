@@ -15,7 +15,18 @@ const FormDespesa = ({ form, setForm, adicionarDespesa }) => {
   return (
     <form onSubmit={handleSubmit}>
       <input name="nome" placeholder="Nome" value={form.nome} onChange={handleChange} required />
-      <input name="categoria" placeholder="Categoria" value={form.categoria} onChange={handleChange} required />
+      <select name="categoria" value={form.categoria} onChange={handleChange}>
+        <option value="alim">Alimentação</option>
+        <option value="luz">Luz</option>
+        <option value="agua">Água</option>
+        <option value="inter">Internet</option>
+        <option value="alug">Aluguel</option>
+        <option value="transp">Transporte</option>
+        <option value="saude">Plano de Saúde</option>
+        <option value="lazer">Lazer</option>
+        <option value="roupa">Vestuário</option>
+        <option value="outros">Outros</option>
+      </select>
       <select name="tipo" value={form.tipo} onChange={handleChange}>
         <option value="fixa">Despesa Fixa</option>
         <option value="variavel">Despesa Variável</option>
