@@ -17,7 +17,7 @@ const GraficoDespesas = ({ despesasFiltradas }) => {
     }
   ];
 
-  const cores = ['#6A0DAD', '#9370DB'];
+  const cores = ['#580c81', '#af2ab6'];
 
   return (
     <div style={{ width: '100%', maxWidth: 1600, height: 300 }}>

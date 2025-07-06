@@ -16,6 +16,7 @@ const FormDespesa = ({ form, setForm, adicionarDespesa }) => {
     <form onSubmit={handleSubmit}>
       <input name="nome" placeholder="Nome" value={form.nome} onChange={handleChange} required />
       <select name="categoria" value={form.categoria} onChange={handleChange}>
+        <option value="" disabled>Selecione uma categoria</option>
         <option value="alim">Alimentação</option>
         <option value="luz">Luz</option>
         <option value="agua">Água</option>

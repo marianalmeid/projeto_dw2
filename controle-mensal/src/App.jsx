@@ -31,8 +31,11 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem('despesas', JSON.stringify(despesas));
   }, [despesas]);
+  
 
   const adicionarDespesa = (novaDespesa) => {
+    
+
     if (indiceEdicao !== null) {
       const atualizadas = [...despesas];
       atualizadas[indiceEdicao] = novaDespesa;
@@ -41,9 +44,8 @@ const App = () => {
     } else {
       setDespesas([...despesas, {
         ...novaDespesa,
-        valor: novaDespesa.tipo === 'fixa'
-          ? parseFloat(novaDespesa.valor)
-          : novaDespesa.subcategorias.reduce((total, sub) => total + parseFloat(sub.valor), 0)
+        valor: parseFloat(novaDespesa.valor)
+
       }]);
     }
   };
@@ -85,7 +87,7 @@ const App = () => {
       <GraficoDespesas despesasFiltradas={despesasFiltradas} />
 
     
-      <div className="conversorReal-container">
+      <div className="conversor">
         <ConversorReal /> 
       </div>
     </div>
